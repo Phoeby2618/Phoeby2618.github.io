@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[testtest]]></title>
-    <url>%2F2019%2F07%2F12%2Ftesttest%2F</url>
-    <content type="text"><![CDATA[第22个测试。。。]]></content>
-  </entry>
-  <entry>
-    <title><![CDATA[XLNet理解]]></title>
-    <url>%2F2019%2F07%2F11%2Ftt%2F</url>
-    <content type="text"><![CDATA[[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率 代表：ELMO，GPT 优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系 缺点：有些任务（如阅读理解）需要上下文来共同理解，只能依据前文信息，不能捕捉上下文关系 （上述感觉有点矛盾，句子的极大似然有点在于？？） 自编码（AE）自编码语言模型：对句子打乱先编码成低维特征，再通过decoder对打乱部分解码。 代表：BERT 优点：可捕捉到上下文信息 缺点：没有估计整个句子的极大似然，而只是将打乱的句子进行重构？？？ Motivation文章主要和BERT模型比较，因此针对BERT的缺点进行分析： BERT问题： 由于预训练阶段有【mask】字符，而在fine-tune阶段是没有的，导致了预训练和fine-tune阶段的数据差异 bert是直接对预测字符进行【mask】，但mask字符之间应该还存在依赖关系，但bert直接忽略了。 综上描述，本文提出XLNet模型，结合了自回归和自编码语言模型各自的优点，并改进了bert的问题。 XLNet采用自回归方式进行训练，同时结合上下文信息。 上下文信息的获取并不是像bert直接【mask】预测字符，而是通过“打乱”句子词的顺序来获得，并在attention层采用特定mask方式来预测乱序序列的极大似然。 另创新: 采用transfomerXL来作编码器，集成了片段循环和相对位置编码，相对位置编码对长文本更有用 基于本文的乱序语言模型调整了TransformerXL参数 XLNetPermutaion language modeling对于一个长度为N的序列，其全排列共有n！种方式。XLNet并不是只基于原始输入序列来预测该序列的极大似然，而是采样原始序列的不同排列方式来预测，由于不同排列方式包含了一个词的上下文信息，因此XLNet模型可捕捉到文本的上下文信息。 如上图：对于原始序列1,2,3,4. 采样了4种排列方式，当预测的字符是3时，对于4,3,1,2序列，3可基于其下文4来预测，而对于1,4,2,3,序列，3可得到所有上下文信息。由于模型的参数是不变的，因此，选择不同排列方式进行训练，h3位置的隐层信息会结合所有的序列上下文信息。 需要注意的是：这里乱序并不是真正的输入序列乱序，预训练时输入序列仍然是1,2,3,4序列，其“打乱”是通过attention层 mask方式来获得打乱序列。为什么不直接对输入序列进行打乱，作者说是为了保持预训练和fine-tune阶段统一，fine-tune阶段并不会将序列乱序输入。 XLNET语言模型目标： max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{zc}|x_{z\leq c})\right]=E_z\left[\sum^T_{t=c+1}\log_{P_{\theta}}(x_{z_t}|x_{z]]></content>
-      <categories>
-        <category>论文</category>
-      </categories>
-      <tags>
-        <tag>modelSummary</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[XLNet理解]]></title>
     <url>%2F2019%2F07%2F11%2FXL_net%2F</url>
     <content type="text"><![CDATA[XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率 代表：ELMO，GPT 优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系 缺点：有些任务（如阅读理解）需要上下文来共同理解，只能依据前文信息，不能捕捉上下文关系 （上述感觉有点矛盾，句子的极大似然有点在于？？） 自编码（AE）自编码语言模型：对句子打乱先编码成低维特征，再通过decoder对打乱部分解码。 代表：BERT 优点：可捕捉到上下文信息 缺点：没有估计整个句子的极大似然，而只是将打乱的句子进行重构？？？ Motivation文章主要和BERT模型比较，因此针对BERT的缺点进行分析： BERT问题： 由于预训练阶段有【mask】字符，而在fine-tune阶段是没有的，导致了预训练和fine-tune阶段的数据差异 bert是直接对预测字符进行【mask】，但mask字符之间应该还存在依赖关系，但bert直接忽略了。 综上描述，本文提出XLNet模型，结合了自回归和自编码语言模型各自的优点，并改进了bert的问题。 XLNet采用自回归方式进行训练，同时结合上下文信息。 上下文信息的获取并不是像bert直接【mask】预测字符，而是通过“打乱”句子词的顺序来获得，并在attention层采用特定mask方式来预测乱序序列的极大似然。 另创新: 采用transfomerXL来作编码器，集成了片段循环和相对位置编码，相对位置编码对长文本更有用 基于本文的乱序语言模型调整了TransformerXL参数 XLNetPermutaion language modeling对于一个长度为N的序列，其全排列共有n！种方式。XLNet并不是只基于原始输入序列来预测该序列的极大似然，而是采样原始序列的不同排列方式来预测，由于不同排列方式包含了一个词的上下文信息，因此XLNet模型可捕捉到文本的上下文信息。 如上图：对于原始序列1,2,3,4. 采样了4种排列方式，当预测的字符是3时，对于4,3,1,2序列，3可基于其下文4来预测，而对于1,4,2,3,序列，3可得到所有上下文信息。由于模型的参数是不变的，因此，选择不同排列方式进行训练，h3位置的隐层信息会结合所有的序列上下文信息。 需要注意的是：这里乱序并不是真正的输入序列乱序，预训练时输入序列仍然是1,2,3,4序列，其“打乱”是通过attention层 mask方式来获得打乱序列。为什么不直接对输入序列进行打乱，作者说是为了保持预训练和fine-tune阶段统一，fine-tune阶段并不会将序列乱序输入。 XLNET语言模型目标： max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{zc}|x_{z\leq c})\right]=E_z\left[\sum^T_{t=c+1}\log_{P_{\theta}}(x_{z_t}|x_{z]]></content>
