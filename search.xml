@@ -1,59 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>RC论文整理</title>
-      <link href="/2019/03/11/Multi-Granularity%20Hierarchical%20Attention%20Fusion%20Networks%20for%20Reading%20Comprehension%20and%20Question%20Answering/"/>
-      <url>/2019/03/11/Multi-Granularity%20Hierarchical%20Attention%20Fusion%20Networks%20for%20Reading%20Comprehension%20and%20Question%20Answering/</url>
-      
-        <content type="html"><![CDATA[<h3 id="《Multi-Granularity-Hierarchical-Attention-Fusion-Networks-for-Reading-Comprehension-and-Question-Answering》"><a href="#《Multi-Granularity-Hierarchical-Attention-Fusion-Networks-for-Reading-Comprehension-and-Question-Answering》" class="headerlink" title="《Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering》**"></a>《Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering》**</h3><p>框架架构：co-attention层+fusion，self层+fusion，pointer-net</p><p><img src="http://poefy6k3a.bkt.clouddn.com/sqla.png" alt="slqa"></p><ul><li><p>Encoder层：</p><p>ELMO得到的字符嵌入和glove词向量拼接，用BiLSTM编码passage和question的文本向量，将编码的文本向量再和字符向量$c_t$拼接，得到passage和query的文本表示$u_t$。作者认为这里可以看作是不同层面的词表示的residual connection.</p></li></ul><script type="math/tex; mode=display">u_t^Q=[BiLSTM_Q([e_t^Q,c_t^Q]),c_t^Q]</script><script type="math/tex; mode=display">u_t^P=[BiLSTM_P([e_t^P,c_t^P]),c_t^P]其中$ c_t$为ELMO语言模型生成的字符嵌入，而$ e_t$为glove词向量。</script><p>​    其中$ c_t$为ELMO语言模型生成的字符嵌入，而$ e_t$为glove词向量。</p><ul><li><p>Hierarchical Attention &amp; Fusion层</p><p>这里的Hierarchical体现在co-attention和self-attention的结合上，且原表示和对齐后的表示能捕捉到文本不同粒度的语义信息，所以作者在每一个attention后用了连接融合。</p><ul><li><p>Co-attention &amp;Fusion</p><p>计算词词软对齐矩阵:采用可并行的前馈点积方式。</p><script type="math/tex; mode=display">S_{ij}=Att(u_t^Q,u_t^P)=ReLU(W_{lin}^Tu_t^Q)^T \cdot RuLU(W_{lin}^Tu_t^P)</script><ul><li><p>P2Q Attention</p><p>计算question每个词对passage每个词的重要性</p><script type="math/tex; mode=display">a_{j}=softmax\left(S_{:j}\right),</script><p>对齐passage表示$\tilde{Q}$由question表示加权相加而得</p><script type="math/tex; mode=display">\tilde{Q}_{:t}=\sum_j\alpha_{tj}\cdot Q_{:j},\forall j\in[1,\ldots,m]</script></li><li><p>Q2P Attention</p><p>计算和question词最相近的passage词，方法同上</p><p>$ \ \ \ \ \     \beta_i=softmax(S_{i:}) ,\ \ \ \ \ \ \tilde{P}_{:k}=\sum_i\beta_{ik} \cdot  P_i,\forall i \in [1,\ldots,n]$</p><p>$\tilde{P}$表示和当前question词相关的passage词权重和</p></li></ul></li></ul><ul><li><p>融合方式</p><script type="math/tex; mode=display">P'=Fuse(P，\tilde{Q})</script><script type="math/tex; mode=display">Q'=Fuse(Q,\tilde{P})</script><p>其中，Fuse（，）为fusion kernel，作者在还选取了其他kernel的方式，并做了结果分析，有兴趣可以自己具体看论文</p><script type="math/tex; mode=display">m(P,\tilde{Q})=tanh(W_f[P;\tilde{Q};P\circ\tilde{Q};P-\tilde{Q}]+b_f)</script><p>由于作者发现原始上下文表示对全局语义表示十分重要，因此采用gate机制来合并原始上下文和新的对齐表示，</p><script type="math/tex; mode=display">P'=g(P,\tilde{Q})\cdot m(P,\tilde{Q})+(1-g(P,\tilde{Q}))\cdot P</script><script type="math/tex; mode=display">Q'=g(Q,\tilde{P})\cdot m(Q,\tilde{P})+(1-g(Q,\tilde{P}))\cdot Q</script></li></ul></li><li><p>self-attention &amp;Fusion层</p><p>自注意力层分别各自对齐  question和passage的全局表示</p><p>首先将手工构建的passage特征拼接到新的passage表示P’后，并将其通过BiLSTM,</p><script type="math/tex; mode=display">D=BiLSTM([P';feat_{manu}])</script><p>通过双线性对齐</p><script type="math/tex; mode=display">L=softmax(D\cdot W_1\cdot D^T)</script><script type="math/tex; mode=display">\tilde{D}=L\cdot D</script><p>再一次使用fusion kernel融合</p><script type="math/tex; mode=display">D'=Fuse(D,\tilde{D})</script><script type="math/tex; mode=display">D''=BiLSTM(D')</script><p>而对于question，由于长度相对较短，仅将其加权固定为向量</p><script type="math/tex; mode=display">\gamma=softmax(w_q^T,Q'')</script><script type="math/tex; mode=display">q=\sum_j\gamma_j\cdot Q_{:j}'',\forall j\in[1,\ldots,m]</script></li><li><p>output层</p><p>采用双线性match来预测passage的开始和结束词作为答案片段</p><script type="math/tex; mode=display">P_{start}=softmax(q\cdot W_s^T\cdot D'')</script><script type="math/tex; mode=display">P_{end}=softmax(q\cdot W_e^T\cdot D'')</script></li></ul><p>采用$P_s$和$P_e$的负对数似然作为损失函数</p><p>在预测阶段，选择最大的$P_s\cdot P_e$作为答案片段，其中s&lt;=e&lt;=s+15</p><h5 id="Ablation结果分析"><a href="#Ablation结果分析" class="headerlink" title="Ablation结果分析"></a>Ablation结果分析</h5><p><img src="!--￼1--" alt="img"></p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% qnimg slqa_ablation.png %&#125;</span><br></pre></td></tr></table></figure><p>其中BI-linear Match作用最大，其次是Elmo得到的字符向量。</p>]]></content>
-      
-      
+<search>
+  <entry>
+    <title><![CDATA[RC论文整理]]></title>
+    <url>%2F2019%2F03%2F11%2FMulti-Granularity%20Hierarchical%20Attention%20Fusion%20Networks%20for%20Reading%20Comprehension%20and%20Question%20Answering%2F</url>
+    <content type="text"><![CDATA[《Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering》**框架架构：co-attention层+fusion，self层+fusion，pointer-net Encoder层： ELMO得到的字符嵌入和glove词向量拼接，用BiLSTM编码passage和question的文本向量，将编码的文本向量再和字符向量$c_t$拼接，得到passage和query的文本表示$u_t$。作者认为这里可以看作是不同层面的词表示的residual connection. u_t^Q=[BiLSTM_Q([e_t^Q,c_t^Q]),c_t^Q] u_t^P=[BiLSTM_P([e_t^P,c_t^P]),c_t^P]其中$ c_t$为ELMO语言模型生成的字符嵌入，而$ e_t$为glove词向量。​ 其中$ c_t$为ELMO语言模型生成的字符嵌入，而$ e_t$为glove词向量。 Hierarchical Attention &amp; Fusion层 这里的Hierarchical体现在co-attention和self-attention的结合上，且原表示和对齐后的表示能捕捉到文本不同粒度的语义信息，所以作者在每一个attention后用了连接融合。 Co-attention &amp;Fusion 计算词词软对齐矩阵:采用可并行的前馈点积方式。 S_{ij}=Att(u_t^Q,u_t^P)=ReLU(W_{lin}^Tu_t^Q)^T \cdot RuLU(W_{lin}^Tu_t^P) P2Q Attention 计算question每个词对passage每个词的重要性 a_{j}=softmax\left(S_{:j}\right),对齐passage表示$\tilde{Q}$由question表示加权相加而得 \tilde{Q}_{:t}=\sum_j\alpha_{tj}\cdot Q_{:j},\forall j\in[1,\ldots,m] Q2P Attention 计算和question词最相近的passage词，方法同上 $ \ \ \ \ \ \beta_i=softmax(S_{i:}) ,\ \ \ \ \ \ \tilde{P}_{:k}=\sum_i\beta_{ik} \cdot P_i,\forall i \in [1,\ldots,n]$ $\tilde{P}$表示和当前question词相关的passage词权重和 融合方式 P'=Fuse(P，\tilde{Q}) Q'=Fuse(Q,\tilde{P})其中，Fuse（，）为fusion kernel，作者在还选取了其他kernel的方式，并做了结果分析，有兴趣可以自己具体看论文 m(P,\tilde{Q})=tanh(W_f[P;\tilde{Q};P\circ\tilde{Q};P-\tilde{Q}]+b_f)由于作者发现原始上下文表示对全局语义表示十分重要，因此采用gate机制来合并原始上下文和新的对齐表示， P'=g(P,\tilde{Q})\cdot m(P,\tilde{Q})+(1-g(P,\tilde{Q}))\cdot P Q'=g(Q,\tilde{P})\cdot m(Q,\tilde{P})+(1-g(Q,\tilde{P}))\cdot Q self-attention &amp;Fusion层 自注意力层分别各自对齐 question和passage的全局表示 首先将手工构建的passage特征拼接到新的passage表示P’后，并将其通过BiLSTM, D=BiLSTM([P';feat_{manu}])通过双线性对齐 L=softmax(D\cdot W_1\cdot D^T) \tilde{D}=L\cdot D再一次使用fusion kernel融合 D'=Fuse(D,\tilde{D}) D''=BiLSTM(D')而对于question，由于长度相对较短，仅将其加权固定为向量 \gamma=softmax(w_q^T,Q'') q=\sum_j\gamma_j\cdot Q_{:j}'',\forall j\in[1,\ldots,m] output层 采用双线性match来预测passage的开始和结束词作为答案片段 P_{start}=softmax(q\cdot W_s^T\cdot D'') P_{end}=softmax(q\cdot W_e^T\cdot D'') 采用$P_s$和$P_e$的负对数似然作为损失函数 在预测阶段，选择最大的$P_s\cdot P_e$作为答案片段，其中s&lt;=e&lt;=s+15 Ablation结果分析 1&#123;% qnimg slqa_ablation.png %&#125; 其中BI-linear Match作用最大，其次是Elmo得到的字符向量。]]></content>
       <categories>
-          
-          <category> 论文 </category>
-          
+        <category>论文</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> modelSummary </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>test</title>
-      <link href="/2019/03/11/test/"/>
-      <url>/2019/03/11/test/</url>
-      
-        <content type="html"><![CDATA[<h3 id="《Iterative-Alternating-Neural-Attention-for-Machine-Reading》"><a href="#《Iterative-Alternating-Neural-Attention-for-Machine-Reading》" class="headerlink" title="《Iterative Alternating Neural Attention for Machine Reading》"></a>《Iterative Alternating Neural Attention for Machine Reading》</h3><h3 id="Inference-推理阶段-旨在处理文本和查询复杂的语义关系，为答案预测提供强有力的证据。"><a href="#Inference-推理阶段-旨在处理文本和查询复杂的语义关系，为答案预测提供强有力的证据。" class="headerlink" title="Inference(推理阶段)旨在处理文本和查询复杂的语义关系，为答案预测提供强有力的证据。"></a>Inference(推理阶段)旨在处理文本和查询复杂的语义关系，为答案预测提供强有力的证据。</h3><p>使用迭代过程完成，每次迭代处理document和query信息并存储起来，最终，利用迭代存储的记忆信息预测答案。</p><p>对query和document 双向GRU编码, 对query和document进行迭代推理，</p><p>Q i，t为添加注意力权重的query，用原qi和第t-1轮推理向量st-1进行双线性匹配加偏置    </p><p>Di，t为添加注意力权重的document，用原q和d和前一步推S t-1理得到</p><script type="math/tex; mode=display">m(P,\tilde{Q})=tanh(W_f[P;\tilde{Q};P\circ\tilde{Q};P-\tilde{Q}]+b_f)</script><script type="math/tex; mode=display">a_{j}=softmax\left(S_{:j}\right),</script>]]></content>
-      
-      
+      <tags>
+        <tag>modelSummary</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[test]]></title>
+    <url>%2F2019%2F03%2F11%2Ftest%2F</url>
+    <content type="text"><![CDATA[《Iterative Alternating Neural Attention for Machine Reading》Inference(推理阶段)旨在处理文本和查询复杂的语义关系，为答案预测提供强有力的证据。使用迭代过程完成，每次迭代处理document和query信息并存储起来，最终，利用迭代存储的记忆信息预测答案。 对query和document 双向GRU编码, 对query和document进行迭代推理， Q i，t为添加注意力权重的query，用原qi和第t-1轮推理向量st-1进行双线性匹配加偏置 Di，t为添加注意力权重的document，用原q和d和前一步推S t-1理得到 m(P,\tilde{Q})=tanh(W_f[P;\tilde{Q};P\circ\tilde{Q};P-\tilde{Q}]+b_f) a_{j}=softmax\left(S_{:j}\right),]]></content>
       <categories>
-          
-          <category> test </category>
-          
+        <category>test</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> modelSummary </tag>
-            
-            <tag> test </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>modelSummary</tag>
+        <tag>test</tag>
+      </tags>
+  </entry>
 </search>
