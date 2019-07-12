@@ -79,25 +79,18 @@
 
 
 
-<meta name="description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta name="description" content="Multi-Task Deep Neural Networks for Natural Language UnderstandingMT-DNN模型 基于bert的多任务微调  将GLUE的9个数据集分成4个任务  单句预测（句子语法判断COLA，情感分析SST-2） 文本相似度（相似度分数STS-B） 成对句子分类（文本蕴含RTE、MNLI，释义识别QQP，MRPC） 相关性排序任务（句子对排序">
 <meta name="keywords" content="modelSummary">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XLNet理解">
-<meta property="og:url" content="https://phoeby2618.github.io/2019/07/11/XL_net/index.html">
+<meta property="og:title" content="文本蕴含部分论文总结">
+<meta property="og:url" content="https://phoeby2618.github.io/2019/06/15/entailment_partone/index.html">
 <meta property="og:site_name" content="Doraemon&#39;s Pocket">
-<meta property="og:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta property="og:description" content="Multi-Task Deep Neural Networks for Natural Language UnderstandingMT-DNN模型 基于bert的多任务微调  将GLUE的9个数据集分成4个任务  单句预测（句子语法判断COLA，情感分析SST-2） 文本相似度（相似度分数STS-B） 成对句子分类（文本蕴含RTE、MNLI，释义识别QQP，MRPC） 相关性排序任务（句子对排序">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png">
-<meta property="og:updated_time" content="2019-07-12T08:02:03.635Z">
+<meta property="og:updated_time" content="2019-07-12T08:25:38.296Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XLNet理解">
-<meta name="twitter:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
-<meta name="twitter:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
+<meta name="twitter:title" content="文本蕴含部分论文总结">
+<meta name="twitter:description" content="Multi-Task Deep Neural Networks for Natural Language UnderstandingMT-DNN模型 基于bert的多任务微调  将GLUE的9个数据集分成4个任务  单句预测（句子语法判断COLA，情感分析SST-2） 文本相似度（相似度分数STS-B） 成对句子分类（文本蕴含RTE、MNLI，释义识别QQP，MRPC） 相关性排序任务（句子对排序">
 
 
 
@@ -127,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+  <link rel="canonical" href="https://phoeby2618.github.io/2019/06/15/entailment_partone/">
 
 
 
 
 
-  <title>XLNet理解 | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>文本蕴含部分论文总结 | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -292,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/06/15/entailment_partone/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="rui">
@@ -309,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XLNet理解</h1>
+          <h1 class="post-title" itemprop="name headline">文本蕴含部分论文总结</h1>
         
 
         <div class="post-meta">
@@ -321,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T09:33:20+08:00">
-                2019-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-15T22:28:36+08:00">
+                2019-06-15
               </time>
             
 
@@ -381,79 +374,153 @@
       
 
       
-        <h1 id="XLNet理解"><a href="#XLNet理解" class="headerlink" title="XLNet理解"></a>XLNet理解</h1><p>[TOC]</p>
-<p>原文链接: <a href="https://arxiv.org/pdf/1906.08237.pdf" target="_blank" rel="noopener">XLNet: Generalized Autoregressive Pretraining for Language Understanding</a></p>
-<h2 id="两个概念"><a href="#两个概念" class="headerlink" title="两个概念"></a>两个概念</h2><h3 id="自回归（AR）"><a href="#自回归（AR）" class="headerlink" title="自回归（AR）"></a>自回归（AR）</h3><p>自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率</p>
+        <h2 id="Multi-Task-Deep-Neural-Networks-for-Natural-Language-Understanding"><a href="#Multi-Task-Deep-Neural-Networks-for-Natural-Language-Understanding" class="headerlink" title="Multi-Task Deep Neural Networks for Natural Language Understanding"></a>Multi-Task Deep Neural Networks for Natural Language Understanding</h2><h3 id="MT-DNN模型"><a href="#MT-DNN模型" class="headerlink" title="MT-DNN模型"></a>MT-DNN模型</h3><ul>
+<li><p>基于bert的多任务微调</p>
+</li>
+<li><p>将GLUE的9个数据集分成4个任务</p>
 <ul>
-<li><p>代表：ELMO，GPT</p>
-</li>
-<li><p>优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系</p>
-</li>
-<li><p>缺点：有些任务（如阅读理解）需要上下文来共同理解，只能依据前文信息，不能捕捉上下文关系</p>
-<p>（上述感觉有点矛盾，句子的极大似然有点在于？？）</p>
+<li>单句预测（句子语法判断COLA，情感分析SST-2）</li>
+<li>文本相似度（相似度分数STS-B）</li>
+<li>成对句子分类（文本蕴含RTE、MNLI，释义识别QQP，MRPC）</li>
+<li>相关性排序任务（句子对排序QNLI）</li>
+</ul>
+<h3 id="模型架构"><a href="#模型架构" class="headerlink" title="模型架构"></a>模型架构</h3><ul>
+<li>embedding：embedding+self attention</li>
+<li>encoder：底层bert微调，采用和bert相同输入方式，单句：CLS+句子；双句：CLS+句1+SEP+句2</li>
+<li>任务层：不同任务采用不同预测方式+损失<ul>
+<li>单句分类：softmax+交叉熵</li>
+<li>文本相似度：sigmoid+MSE</li>
+<li>成对句子分类：SAN网络中多步匹配推理+交叉熵（作者自己的文章）</li>
+<li>相关性排序：sigmoid+正例负对数似然</li>
+</ul>
 </li>
 </ul>
-<h3 id="自编码（AE）"><a href="#自编码（AE）" class="headerlink" title="自编码（AE）"></a>自编码（AE）</h3><p>自编码语言模型：对句子打乱先编码成低维特征，再通过decoder对打乱部分解码。</p>
+</li>
+<li><p>训练方式</p>
 <ul>
-<li>代表：BERT</li>
-<li>优点：可捕捉到上下文信息</li>
-<li>缺点：没有估计整个句子的极大似然，而只是将打乱的句子进行重构？？？</li>
+<li>所有的数据一起，不同类型的任务选择不同的损失方式一次训练</li>
 </ul>
-<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>文章主要和BERT模型比较，因此针对BERT的缺点进行分析：</p>
-<p>BERT问题：</p>
+</li>
+<li><p>实验测试</p>
 <ul>
-<li>由于预训练阶段有【mask】字符，而在fine-tune阶段是没有的，导致了预训练和fine-tune阶段的数据差异</li>
-<li>bert是直接对预测字符进行【mask】，但mask字符之间应该还存在依赖关系，但bert直接忽略了。</li>
+<li>当然是好过bert啦</li>
+<li>由于前文提到多任务的好处之一是少量标签数据，这里在SNLI和scitail上分别做了取0.1%，1%，10%来预测，发现多任务训练在少量标签数据效果远好于bert。</li>
 </ul>
-<p>综上描述，本文提出XLNet模型，结合了自回归和自编码语言模型各自的优点，并改进了bert的问题。</p>
+</li>
+</ul>
+<h2 id="Stochastic-Answer-Network-for-NLI（SAN）"><a href="#Stochastic-Answer-Network-for-NLI（SAN）" class="headerlink" title="Stochastic Answer Network for NLI（SAN）"></a>Stochastic Answer Network for NLI（SAN）</h2><h3 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h3><ul>
+<li>多步推理策略，对最终结果句向量采用多步推理，每步的结果预测一个结果，T步结果取平均。</li>
+</ul>
+<h3 id="模型架构-1"><a href="#模型架构-1" class="headerlink" title="模型架构"></a>模型架构</h3><ul>
+<li>embedding层：300维CNNchar+300为glove</li>
+<li>encoder：双层biLSTM分别编码</li>
+<li>记忆模块：对上层文本编码先relu映射再点积，同decompAtt拼接，再用一层bistm编码</li>
+<li><p>答案预测：采用（假设，前提假设之间的交互）句向量进行多步推理</p>
+<ul>
+<li>初始状态为 假设 自注意力加权s0，</li>
+<li>输入为 假设和 前提矩阵和假设向量交互结果 拼接</li>
+<li>得到新的状态st，再用于下一步假设向量输入</li>
+<li>每一步由 [假设，前提交互，假设-前提交互，假设*前提交互 ]输出结果，预测类标</li>
+<li>总T步类标取平均</li>
+</ul>
+</li>
+<li><p>模型trick：在预测结果采用dropout加强泛化。</p>
+</li>
+</ul>
+<h2 id="Convolutional-Spatial-Attention-Model-for-Reading-Comprehension-with-Multiple-Choice-Questions"><a href="#Convolutional-Spatial-Attention-Model-for-Reading-Comprehension-with-Multiple-Choice-Questions" class="headerlink" title="Convolutional Spatial Attention Model for Reading Comprehension with Multiple-Choice Questions"></a>Convolutional Spatial Attention Model for Reading Comprehension with Multiple-Choice Questions</h2><p>可取点：lstm+cnn提取特征结合</p>
+<h3 id="论文中阐述创新点："><a href="#论文中阐述创新点：" class="headerlink" title="论文中阐述创新点："></a>论文中阐述创新点：</h3><p>​    1. 计算候选答案的不同类型的表示</p>
+<p>​    2. 在计算注意力时，应用额外的训练参数来动态调整注意力的值，使之更加灵活</p>
+<p>​    3. 使用每个层级的注意力结构来共同预测。</p>
+<h3 id="模型架构-2"><a href="#模型架构-2" class="headerlink" title="模型架构"></a>模型架构</h3><p>本文模型提出CSA（空间卷积注意力）充分利用层级注意力信息来做多选题阅读理解</p>
 <ol>
-<li>XLNet采用自回归方式进行训练，同时结合上下文信息。</li>
-<li>上下文信息的获取并不是像bert直接【mask】预测字符，而是通过“打乱”句子词的顺序来获得，并在attention层采用特定mask方式来预测乱序序列的极大似然。</li>
+<li>编码层：编码了passage，问题Q和候选答案C的 词向量+ELMO+POS词性特征+匹配特征。</li>
+<li>丰富候选答案的表示：合并passage，问题和三者之间的注意力交互信息。</li>
 </ol>
-<p>另创新:</p>
-<ol>
-<li>采用transfomerXL来作编码器，集成了片段循环和相对位置编码，相对位置编码对长文本更有用</li>
-<li>基于本文的乱序语言模型调整了TransformerXL参数</li>
-</ol>
-<h2 id="XLNet"><a href="#XLNet" class="headerlink" title="XLNet"></a>XLNet</h2><h3 id="Permutaion-language-modeling"><a href="#Permutaion-language-modeling" class="headerlink" title="Permutaion language modeling"></a>Permutaion language modeling</h3><p>对于一个长度为N的序列，其全排列共有n！种方式。XLNet并不是只基于原始输入序列来预测该序列的极大似然，而是采样原始序列的不同排列方式来预测，由于不同排列方式包含了一个词的上下文信息，因此XLNet模型可捕捉到文本的上下文信息。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png" alt="1562816758999"></p>
-<p>如上图：对于原始序列1,2,3,4. 采样了4种排列方式，当预测的字符是3时，对于4,3,1,2序列，3可基于其下文4来预测，而对于1,4,2,3,序列，3可得到所有上下文信息。由于模型的参数是不变的，因此，选择不同排列方式进行训练，h3位置的隐层信息会结合所有的序列上下文信息。</p>
-<p>需要注意的是：这里乱序并不是真正的输入序列乱序，预训练时输入序列仍然是1,2,3,4序列，其“打乱”是通过attention层 mask方式来获得打乱序列。为什么不直接对输入序列进行打乱，作者说是为了保持预训练和fine-tune阶段统一，fine-tune阶段并不会将序列乱序输入。</p>
-<p>XLNET语言模型目标：</p>
+<p>​    本文重点在这里！用Fusion-Net思想，将C和Q,C和P，Q和P分别融合，再额外将QP和Q本身信息融合</p>
 <script type="math/tex; mode=display">
-max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script><p>其中$ z_t $表示第t个元素，$z_{&lt;t}$表示打乱序列的第t-1个元素。</p>
-<h3 id="Two-Stream"><a href="#Two-Stream" class="headerlink" title="Two-Stream"></a>Two-Stream</h3><p>attention mask实现方式：Two-Stream</p>
-<p>保留$h_{\theta}(x_{z\leq t})$  和 $g_{\theta}(x_{z&lt;t})$ 两种表示，其中 $h_{\theta}(x_{z\leq t})$ 表示乱序列中前t-1个词和第t个词的隐层信息（和bert隐层一样）， $g_{\theta}(x_{z&lt;t})$  是乱序中前t-1个词和第t个词的位置信息，h和g如下图所示。                                                                                                                              </p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png" alt="XLNET2"></p>
-<p>综合计算如下图所示，其中$g^{0}_i=w$,为随机初始化的向量，$h^0_i=e(x_i)$为第i个词的词向量。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png" alt="1562816758999"><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png" alt="1562816758999"></p>
-<p>保留2种表示可以使得在预测第t个词的时候不看到其文本信息，但可知其位置信息，因为乱序后，如3-2-4-1，要预测4，仅根据3,2来预测但是模型并不知道要预测的位置是4还是1，因此保留g使得模型知道要预测的是哪个位置的词。另外，位置信息也有一定的依赖关系，模型也可以捕捉这个依赖关系。</p>
-<p>具体attention mask做法如下图右所示，query stream不知道当前词（即对角线）的文本信息，只知道其位置信息，content Stream则可基于乱序的前面词和当前词的文本信息。具体解释下图右下矩阵，乱序序列为3-2-4-1，content stream矩阵第一行即是$h_1​$位置，基于2,4,1,3四个词得到h1的信息，第二行即是h2，基于3,2位置得到3的信息，第3行仅根据3得到h3信息，第4行仅根据3,2,4得到h4信息。Query Stream矩阵第一行h1仅根据3,2,4,得到h1信息，并不基于h1内容本身，同理往下。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png" alt="XLNET3"></p>
-<p>Content Stream和普通的attention 一样，Query Stream计算方式则如下，当前位置隐层仅依赖前面位置的文本信息和当前位置的位置信息，并不依赖当前位置的文本信息！</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png" alt="XLNET2"></p>
-<p>在训练阶段保持两个表示，fine-tune阶段不存在语言模型预测，则只用h表示，g表示被舍弃。</p>
-<h2 id="其他亮点"><a href="#其他亮点" class="headerlink" title="其他亮点"></a>其他亮点</h2><ul>
-<li><p>为了便于收敛和优化，模型仅预测部分词信息，将序列分成前半段和后半段，仅预测后半段词</p>
-<script type="math/tex; mode=display">max_{\theta}\ \ \ \  E_z\left[\sum^T_{t-1}\log_{P_{\theta}}(x_{z>c}|x_{z\leq c})\right]=E_z\left[\sum^T_{t=c+1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script></li>
-<li><p>作者采用了transformerXL模型来作为encoder，两个特点：</p>
-<ul>
-<li>片段循环：将序列分成2段，缓存前一个片段的输出，拼接到后一个片段词中，使模型建立长期依赖，且可使用先前段数据来预测当前段，提高了预测速度。</li>
-<li>采用相对位置编码。</li>
+R_{CQ}=g(B_C,B_Q),</script><script type="math/tex; mode=display">
+R_{CP}=g(B_C,B_P),</script><script type="math/tex; mode=display">
+R_{QP}=g(B_Q,B_P),</script><script type="math/tex; mode=display">
+R_{self-Q}=g(B_Q,B_{QP})</script><p>​    融合方式类似于双线性，再将融合信息CQ,CP,C分别和self-Q，QP做点积,直接将6个点积信息连接</p>
+<ol>
+<li><p>抽取特征表示：使用卷积动态总结相邻窗口的信息。</p>
+<p>将上述连接信息分别用3个卷积核5,10,15提取特征，提取的特征用来预测每一个候选答案是答案的可能性，将所有可能性softmax分类。</p>
+</li>
+</ol>
+<h2 id="APPLYING-DEEP-LEARNING-TO-ANSWER-SELECTION-A-STUDY-AND-AN-OPEN-TASK"><a href="#APPLYING-DEEP-LEARNING-TO-ANSWER-SELECTION-A-STUDY-AND-AN-OPEN-TASK" class="headerlink" title="APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK"></a>APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK</h2><h3 id="本文重点"><a href="#本文重点" class="headerlink" title="本文重点"></a>本文重点</h3><ol>
+<li>hinge loss运用</li>
+<li>提出几种siamese cnn架构并做比较</li>
+</ol>
+<h3 id="Cnn优势"><a href="#Cnn优势" class="headerlink" title="Cnn优势"></a>Cnn优势</h3><ul>
+<li>稀疏交互：传统的NN每个输入都和输出有关，但CNN输出部分仅是通过filter和input的局部窗口交互。</li>
+<li>权重共享：filter权重共享，但传统参数仅用来计算一次</li>
+<li>等量表示（Equivariant representation）：和max-pooling思想有关。</li>
+</ul>
+<h3 id="simese架构："><a href="#simese架构：" class="headerlink" title="simese架构："></a>simese架构：</h3><ul>
+<li>单层全连接+tanh编码，cnn抽取特征，maxpooling+tanh用于池化，cos计算相似度</li>
+<li>1架构的权重共享</li>
+<li>在1后增加隐层，并比较权重共享</li>
+<li>多层cnn和多个过滤器比较</li>
+</ul>
+<h3 id="hinge-loss思想"><a href="#hinge-loss思想" class="headerlink" title="hinge loss思想"></a>hinge loss思想</h3><script type="math/tex; mode=display">
+L=max（0,m-cos(V_Q,V_A+)+cos(V_Q,V_A-)）</script><p>当正例-负例&gt;margin，即分类正确，损失=0</p>
+<p>当&lt;margin,表明区分度不够大，损失=本身或-本身，目的要损失最小。</p>
+<p>结论：</p>
+<ol>
+<li>抽取特征用共享权重层比单独抽取效果更好（感觉是否因为这种句子对匹配任务，需要相同的权重去进一步比较，可能还和最后算cos有关，需要向量再同一空间）</li>
+<li>在抽取完特征后增加一个隐层再算cos效果更差，说是cnn已经可以抽取到匹配特征。</li>
+<li>增加cnn过滤器数量可一定程度增加效果</li>
+<li>增加cnn层数也可一定程度增加效果</li>
+</ol>
+<h3 id="几种相似度量方法："><a href="#几种相似度量方法：" class="headerlink" title="几种相似度量方法："></a>几种相似度量方法：</h3><ol>
+<li>cos    </li>
+<li>l1范数：绝对值，沿着坐标轴方向相加    </li>
+<li>l2范数：欧氏距离，两坐标直线距离 </li>
+<li>内积：两向量之间的夹角</li>
+</ol>
+<h3 id="相似度度量结论："><a href="#相似度度量结论：" class="headerlink" title="相似度度量结论："></a>相似度度量结论：</h3><ul>
+<li>和cos比较，l2和内积效果更好，l1效果更差。</li>
+<li>作者提出，基于l2和内积(点乘)结合方式<ul>
+<li>乘法结合：欧式距离*内积方式  +参数调节</li>
+<li>加法结合：欧式距离+内积方式  +参数调节</li>
+<li>乘法效果会稍好。</li>
 </ul>
 </li>
 </ul>
-<h2 id="和bert相比"><a href="#和bert相比" class="headerlink" title="和bert相比"></a>和bert相比</h2><ul>
-<li>输入和bert同，采用两个句子+SEP和CLS字符来预测，但XLNET_large显示large模型不需要下一句预测任务也可达到相同精度</li>
-<li>和bert一样都是部分词预测，并没有预测全部，</li>
-<li>但比bert多捕捉到了预测词的位置信息，和mask字符间的依赖信息。！</li>
+<h2 id="Multi-Perspective-Sentence-Similarity-Modeling-with-Convolutional-Neural-Networks"><a href="#Multi-Perspective-Sentence-Similarity-Modeling-with-Convolutional-Neural-Networks" class="headerlink" title="Multi-Perspective Sentence Similarity Modeling with Convolutional Neural Networks"></a>Multi-Perspective Sentence Similarity Modeling with Convolutional Neural Networks</h2><h3 id="全文思想"><a href="#全文思想" class="headerlink" title="全文思想"></a>全文思想</h3><ul>
+<li>采用2种过滤器方式，3个过滤宽度，3中池化方式，对不同输出采用对应的相似度计算</li>
 </ul>
-<h2 id="文章重点小结："><a href="#文章重点小结：" class="headerlink" title="文章重点小结："></a>文章重点小结：</h2><ul>
-<li><p>双向自回归语言编码</p>
-</li>
-<li><p>two stream自注意力</p>
-</li>
-<li>创新点：解决预测token的依赖问题和保留位置信息（其实我个人觉得还好，token依赖因为 mask token随机，且不止训练一遍，总会有别的案例捕捉到这个依赖关系，更何况还有一定比例保持不变。而位置信息可以对bert的mask token也换成其位置信息，而不要文本信息，感觉是一样的，实现还简单些）</li>
+<h3 id="模型架构："><a href="#模型架构：" class="headerlink" title="模型架构："></a>模型架构：</h3><p>​    过滤器方式：1. 对每个词向量总维度</p>
+<p>​                2. 对词向量每一维</p>
+<p>​    过滤宽度：上述两种方式分别采用宽度为1,2,3，和全部词长度宽度大小。</p>
+<p>​    池化方式：max，min，aver</p>
+<p>​    相似度：采用cos和欧氏距离共同度量。    </p>
+<p>​            分别对不同的过滤及池化方式采用对应的相似度计算。</p>
+<h2 id="UMD-TTIC-UW-at-SemEval-2016-Task-1-Attention-Based-Multi-Perspective-Convolutional-Neural-Networks-for-Textual-Similarity-Measurement"><a href="#UMD-TTIC-UW-at-SemEval-2016-Task-1-Attention-Based-Multi-Perspective-Convolutional-Neural-Networks-for-Textual-Similarity-Measurement" class="headerlink" title="UMD-TTIC-UW at SemEval-2016 Task 1: Attention-Based Multi-Perspective Convolutional Neural Networks for Textual Similarity Measurement"></a>UMD-TTIC-UW at SemEval-2016 Task 1: Attention-Based Multi-Perspective Convolutional Neural Networks for Textual Similarity Measurement</h2><h3 id="全文思想-1"><a href="#全文思想-1" class="headerlink" title="全文思想"></a>全文思想</h3><ul>
+<li>基于上文MPCNN架构，上文是基于siamese结构，输入都是独立的句子，本文则在输入之前将两个句子交互。</li>
+</ul>
+<h3 id="输入交互方式"><a href="#输入交互方式" class="headerlink" title="输入交互方式"></a>输入交互方式</h3><p>即词词交互，并将交互矩阵和原词进行点积操作并和原词拼接作为输入。</p>
+<h2 id="A-COMPARE-AGGREGATE-MODEL-FOR-MATCHING-TEXT-SEQUENCES"><a href="#A-COMPARE-AGGREGATE-MODEL-FOR-MATCHING-TEXT-SEQUENCES" class="headerlink" title="A COMPARE-AGGREGATE MODEL FOR MATCHING TEXT SEQUENCES"></a>A COMPARE-AGGREGATE MODEL FOR MATCHING TEXT SEQUENCES</h2><h3 id="文中提及本文重点"><a href="#文中提及本文重点" class="headerlink" title="文中提及本文重点"></a>文中提及本文重点</h3><p>1.比较不同聚合函数，2.采用cnn提取特征</p>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><ol>
+<li>更改版LSTM编码，仅用输入门</li>
+<li>采用Q前馈+A点积方式计算注意力矩阵</li>
+<li>重点比较不同的聚合函数，本文提出6种</li>
+<li>最后用单层CNN提取特征并分类。</li>
+</ol>
+<h3 id="NATURAL-LANGUAGE-INFERENCE-OVER-INTERACTION-SPACE"><a href="#NATURAL-LANGUAGE-INFERENCE-OVER-INTERACTION-SPACE" class="headerlink" title="NATURAL LANGUAGE INFERENCE OVER INTERACTION SPACE"></a>NATURAL LANGUAGE INFERENCE OVER INTERACTION SPACE</h3><h3 id="（DIIN）"><a href="#（DIIN）" class="headerlink" title="（DIIN）"></a>（DIIN）</h3><h3 id="模型思想"><a href="#模型思想" class="headerlink" title="模型思想"></a>模型思想</h3><p>提出DIIN网络，用denseNet来提取特征图</p>
+<h3 id="模型结构-1"><a href="#模型结构-1" class="headerlink" title="模型结构"></a>模型结构</h3><ul>
+<li>embedding层：词向量+字符向量+词性特征+硬匹配特征</li>
+<li>encoder：highway编码+自注意编码+gate编码（和highway同，就是不是1-g，而是2个gate）</li>
+<li>特征交互层：方式为a*b</li>
+<li>抽取匹配层：对上层交互特征（4维，最后a，b维相乘不相加）采用denseNet提取很多特征</li>
+<li>输出层：线性分类器。</li>
+</ul>
+<h3 id="DRr-Net-Dynamic-Re-read-Network-for-Sentence-Semantic-Matching"><a href="#DRr-Net-Dynamic-Re-read-Network-for-Sentence-Semantic-Matching" class="headerlink" title="DRr-Net: Dynamic Re-read Network for Sentence Semantic Matching"></a>DRr-Net: Dynamic Re-read Network for Sentence Semantic Matching</h3><h3 id="模型结构-2"><a href="#模型结构-2" class="headerlink" title="模型结构"></a>模型结构</h3><ul>
+<li>堆叠GRUs</li>
+<li>自匹配结构</li>
+<li>Re-read结构（类似match-lstm，但并不是根据假设每一步循环，而是前提文本和带注意力的假设文本（一维向量）循环n次，作为re-read n次）</li>
+<li>匹配层，相连，相减，相加</li>
+<li>3个loss，上层分别计算3个匹配层：原假设结果匹配，read结果匹配，原+read再匹配结果。3个loss相加。</li>
 </ul>
 
       
@@ -485,8 +552,8 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/30/dynamic_languageMODEL/" rel="next" title="语言模型系列（BERT，ELMO,GTP,XLNET）">
-                <i class="fa fa-chevron-left"></i> 语言模型系列（BERT，ELMO,GTP,XLNET）
+              <a href="/2019/06/10/reshighwaydenseNET/" rel="next" title="残差相关论文小结">
+                <i class="fa fa-chevron-left"></i> 残差相关论文小结
               </a>
             
           </div>
@@ -494,6 +561,10 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/30/dynamic_languageMODEL/" rel="prev" title="语言模型系列（BERT，ELMO,GTP,XLNET）">
+                语言模型系列（BERT，ELMO,GTP,XLNET） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -627,7 +698,7 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XLNet理解"><span class="nav-number">1.</span> <span class="nav-text">XLNet理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两个概念"><span class="nav-number">1.1.</span> <span class="nav-text">两个概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自回归（AR）"><span class="nav-number">1.1.1.</span> <span class="nav-text">自回归（AR）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自编码（AE）"><span class="nav-number">1.1.2.</span> <span class="nav-text">自编码（AE）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation"><span class="nav-number">1.2.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XLNet"><span class="nav-number">1.3.</span> <span class="nav-text">XLNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutaion-language-modeling"><span class="nav-number">1.3.1.</span> <span class="nav-text">Permutaion language modeling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Stream"><span class="nav-number">1.3.2.</span> <span class="nav-text">Two-Stream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他亮点"><span class="nav-number">1.4.</span> <span class="nav-text">其他亮点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#和bert相比"><span class="nav-number">1.5.</span> <span class="nav-text">和bert相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章重点小结："><span class="nav-number">1.6.</span> <span class="nav-text">文章重点小结：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Task-Deep-Neural-Networks-for-Natural-Language-Understanding"><span class="nav-number">1.</span> <span class="nav-text">Multi-Task Deep Neural Networks for Natural Language Understanding</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MT-DNN模型"><span class="nav-number">1.1.</span> <span class="nav-text">MT-DNN模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型架构"><span class="nav-number">1.2.</span> <span class="nav-text">模型架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Stochastic-Answer-Network-for-NLI（SAN）"><span class="nav-number">2.</span> <span class="nav-text">Stochastic Answer Network for NLI（SAN）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创新点"><span class="nav-number">2.1.</span> <span class="nav-text">创新点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型架构-1"><span class="nav-number">2.2.</span> <span class="nav-text">模型架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Convolutional-Spatial-Attention-Model-for-Reading-Comprehension-with-Multiple-Choice-Questions"><span class="nav-number">3.</span> <span class="nav-text">Convolutional Spatial Attention Model for Reading Comprehension with Multiple-Choice Questions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#论文中阐述创新点："><span class="nav-number">3.1.</span> <span class="nav-text">论文中阐述创新点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型架构-2"><span class="nav-number">3.2.</span> <span class="nav-text">模型架构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#APPLYING-DEEP-LEARNING-TO-ANSWER-SELECTION-A-STUDY-AND-AN-OPEN-TASK"><span class="nav-number">4.</span> <span class="nav-text">APPLYING DEEP LEARNING TO ANSWER SELECTION: A STUDY AND AN OPEN TASK</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#本文重点"><span class="nav-number">4.1.</span> <span class="nav-text">本文重点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cnn优势"><span class="nav-number">4.2.</span> <span class="nav-text">Cnn优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#simese架构："><span class="nav-number">4.3.</span> <span class="nav-text">simese架构：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hinge-loss思想"><span class="nav-number">4.4.</span> <span class="nav-text">hinge loss思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#几种相似度量方法："><span class="nav-number">4.5.</span> <span class="nav-text">几种相似度量方法：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相似度度量结论："><span class="nav-number">4.6.</span> <span class="nav-text">相似度度量结论：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multi-Perspective-Sentence-Similarity-Modeling-with-Convolutional-Neural-Networks"><span class="nav-number">5.</span> <span class="nav-text">Multi-Perspective Sentence Similarity Modeling with Convolutional Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全文思想"><span class="nav-number">5.1.</span> <span class="nav-text">全文思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型架构："><span class="nav-number">5.2.</span> <span class="nav-text">模型架构：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UMD-TTIC-UW-at-SemEval-2016-Task-1-Attention-Based-Multi-Perspective-Convolutional-Neural-Networks-for-Textual-Similarity-Measurement"><span class="nav-number">6.</span> <span class="nav-text">UMD-TTIC-UW at SemEval-2016 Task 1: Attention-Based Multi-Perspective Convolutional Neural Networks for Textual Similarity Measurement</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#全文思想-1"><span class="nav-number">6.1.</span> <span class="nav-text">全文思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入交互方式"><span class="nav-number">6.2.</span> <span class="nav-text">输入交互方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-COMPARE-AGGREGATE-MODEL-FOR-MATCHING-TEXT-SEQUENCES"><span class="nav-number">7.</span> <span class="nav-text">A COMPARE-AGGREGATE MODEL FOR MATCHING TEXT SEQUENCES</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文中提及本文重点"><span class="nav-number">7.1.</span> <span class="nav-text">文中提及本文重点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型结构"><span class="nav-number">7.2.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NATURAL-LANGUAGE-INFERENCE-OVER-INTERACTION-SPACE"><span class="nav-number">7.3.</span> <span class="nav-text">NATURAL LANGUAGE INFERENCE OVER INTERACTION SPACE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#（DIIN）"><span class="nav-number">7.4.</span> <span class="nav-text">（DIIN）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型思想"><span class="nav-number">7.5.</span> <span class="nav-text">模型思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型结构-1"><span class="nav-number">7.6.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DRr-Net-Dynamic-Re-read-Network-for-Sentence-Semantic-Matching"><span class="nav-number">7.7.</span> <span class="nav-text">DRr-Net: Dynamic Re-read Network for Sentence Semantic Matching</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型结构-2"><span class="nav-number">7.8.</span> <span class="nav-text">模型结构</span></a></li></ol></li></ol></div>
             
 
           </div>

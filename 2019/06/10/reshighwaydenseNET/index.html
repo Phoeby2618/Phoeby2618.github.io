@@ -79,25 +79,18 @@
 
 
 
-<meta name="description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta name="description" content="Densely Connected Convolutional Networks深层网络：Highway——ResNet——stochastic depth(ResNet 随机drop掉一些层)——DenseNet DenseNet优势： 缓解梯度消失 增强特征传播 加强特征重用 减少参数  文章要点 block中每层的输入和前面层的输出直接相连，因此，最后一层可看到前面所有层的结果。  在los">
 <meta name="keywords" content="modelSummary">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XLNet理解">
-<meta property="og:url" content="https://phoeby2618.github.io/2019/07/11/XL_net/index.html">
+<meta property="og:title" content="残差相关论文小结">
+<meta property="og:url" content="https://phoeby2618.github.io/2019/06/10/reshighwaydenseNET/index.html">
 <meta property="og:site_name" content="Doraemon&#39;s Pocket">
-<meta property="og:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta property="og:description" content="Densely Connected Convolutional Networks深层网络：Highway——ResNet——stochastic depth(ResNet 随机drop掉一些层)——DenseNet DenseNet优势： 缓解梯度消失 增强特征传播 加强特征重用 减少参数  文章要点 block中每层的输入和前面层的输出直接相连，因此，最后一层可看到前面所有层的结果。  在los">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png">
-<meta property="og:updated_time" content="2019-07-12T08:02:03.635Z">
+<meta property="og:updated_time" content="2019-07-12T08:29:56.385Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XLNet理解">
-<meta name="twitter:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
-<meta name="twitter:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
+<meta name="twitter:title" content="残差相关论文小结">
+<meta name="twitter:description" content="Densely Connected Convolutional Networks深层网络：Highway——ResNet——stochastic depth(ResNet 随机drop掉一些层)——DenseNet DenseNet优势： 缓解梯度消失 增强特征传播 加强特征重用 减少参数  文章要点 block中每层的输入和前面层的输出直接相连，因此，最后一层可看到前面所有层的结果。  在los">
 
 
 
@@ -127,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+  <link rel="canonical" href="https://phoeby2618.github.io/2019/06/10/reshighwaydenseNET/">
 
 
 
 
 
-  <title>XLNet理解 | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>残差相关论文小结 | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -292,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/06/10/reshighwaydenseNET/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="rui">
@@ -309,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XLNet理解</h1>
+          <h1 class="post-title" itemprop="name headline">残差相关论文小结</h1>
         
 
         <div class="post-meta">
@@ -321,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T09:33:20+08:00">
-                2019-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-10T19:32:30+08:00">
+                2019-06-10
               </time>
             
 
@@ -381,80 +374,75 @@
       
 
       
-        <h1 id="XLNet理解"><a href="#XLNet理解" class="headerlink" title="XLNet理解"></a>XLNet理解</h1><p>[TOC]</p>
-<p>原文链接: <a href="https://arxiv.org/pdf/1906.08237.pdf" target="_blank" rel="noopener">XLNet: Generalized Autoregressive Pretraining for Language Understanding</a></p>
-<h2 id="两个概念"><a href="#两个概念" class="headerlink" title="两个概念"></a>两个概念</h2><h3 id="自回归（AR）"><a href="#自回归（AR）" class="headerlink" title="自回归（AR）"></a>自回归（AR）</h3><p>自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率</p>
-<ul>
-<li><p>代表：ELMO，GPT</p>
+        <h2 id="Densely-Connected-Convolutional-Networks"><a href="#Densely-Connected-Convolutional-Networks" class="headerlink" title="Densely Connected Convolutional Networks"></a>Densely Connected Convolutional Networks</h2><p>深层网络：Highway——ResNet——stochastic depth(ResNet 随机drop掉一些层)——DenseNet</p>
+<h3 id="DenseNet优势："><a href="#DenseNet优势：" class="headerlink" title="DenseNet优势："></a>DenseNet优势：</h3><ul>
+<li>缓解梯度消失</li>
+<li>增强特征传播</li>
+<li>加强特征重用</li>
+<li>减少参数</li>
+</ul>
+<h3 id="文章要点"><a href="#文章要点" class="headerlink" title="文章要点"></a>文章要点</h3><ul>
+<li><p>block中每层的输入和前面层的输出直接相连，因此，最后一层可看到前面所有层的结果。</p>
 </li>
-<li><p>优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系</p>
-</li>
-<li><p>缺点：有些任务（如阅读理解）需要上下文来共同理解，只能依据前文信息，不能捕捉上下文关系</p>
-<p>（上述感觉有点矛盾，句子的极大似然有点在于？？）</p>
+<li><p>在loss反传的时候可直接对前面层的结果求导，每层的输入可看成对前面特征的collection，减少需要学习的参数，和 ResNet的区别在于ResNet是相加方式，导致输入特征变化，参数重新学。？？相连不也要重新学？</p>
 </li>
 </ul>
-<h3 id="自编码（AE）"><a href="#自编码（AE）" class="headerlink" title="自编码（AE）"></a>自编码（AE）</h3><p>自编码语言模型：对句子打乱先编码成低维特征，再通过decoder对打乱部分解码。</p>
-<ul>
-<li>代表：BERT</li>
-<li>优点：可捕捉到上下文信息</li>
-<li>缺点：没有估计整个句子的极大似然，而只是将打乱的句子进行重构？？？</li>
+<h3 id="模型结构"><a href="#模型结构" class="headerlink" title="模型结构"></a>模型结构</h3><ul>
+<li>3个Dense Block，transition layer间隔（1.改变特征图尺寸，2.摆脱dense  block的瓶颈。）</li>
+<li>每个dense block，BN—改进Relu—3*3Convd，</li>
+<li>每个trainsition layer，BN—1<em>1Convd—2*</em>2pooling</li>
+<li>base dense 3 block<ul>
+<li>{40层，outputdim12，feamap32<em>32}，{100层，outdim12，feamap16\</em>16}，{100层，feamap8*8}</li>
 </ul>
-<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>文章主要和BERT模型比较，因此针对BERT的缺点进行分析：</p>
-<p>BERT问题：</p>
-<ul>
-<li>由于预训练阶段有【mask】字符，而在fine-tune阶段是没有的，导致了预训练和fine-tune阶段的数据差异</li>
-<li>bert是直接对预测字符进行【mask】，但mask字符之间应该还存在依赖关系，但bert直接忽略了。</li>
+</li>
+<li>BC denseNet<ul>
+<li>{100层，outdim12，32<em>32}，{250层，outdim24，16\</em>16}，{190层，outdim40，8*8}</li>
 </ul>
-<p>综上描述，本文提出XLNet模型，结合了自回归和自编码语言模型各自的优点，并改进了bert的问题。</p>
-<ol>
-<li>XLNet采用自回归方式进行训练，同时结合上下文信息。</li>
-<li>上下文信息的获取并不是像bert直接【mask】预测字符，而是通过“打乱”句子词的顺序来获得，并在attention层采用特定mask方式来预测乱序序列的极大似然。</li>
-</ol>
-<p>另创新:</p>
-<ol>
-<li>采用transfomerXL来作编码器，集成了片段循环和相对位置编码，相对位置编码对长文本更有用</li>
-<li>基于本文的乱序语言模型调整了TransformerXL参数</li>
-</ol>
-<h2 id="XLNet"><a href="#XLNet" class="headerlink" title="XLNet"></a>XLNet</h2><h3 id="Permutaion-language-modeling"><a href="#Permutaion-language-modeling" class="headerlink" title="Permutaion language modeling"></a>Permutaion language modeling</h3><p>对于一个长度为N的序列，其全排列共有n！种方式。XLNet并不是只基于原始输入序列来预测该序列的极大似然，而是采样原始序列的不同排列方式来预测，由于不同排列方式包含了一个词的上下文信息，因此XLNet模型可捕捉到文本的上下文信息。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png" alt="1562816758999"></p>
-<p>如上图：对于原始序列1,2,3,4. 采样了4种排列方式，当预测的字符是3时，对于4,3,1,2序列，3可基于其下文4来预测，而对于1,4,2,3,序列，3可得到所有上下文信息。由于模型的参数是不变的，因此，选择不同排列方式进行训练，h3位置的隐层信息会结合所有的序列上下文信息。</p>
-<p>需要注意的是：这里乱序并不是真正的输入序列乱序，预训练时输入序列仍然是1,2,3,4序列，其“打乱”是通过attention层 mask方式来获得打乱序列。为什么不直接对输入序列进行打乱，作者说是为了保持预训练和fine-tune阶段统一，fine-tune阶段并不会将序列乱序输入。</p>
-<p>XLNET语言模型目标：</p>
+</li>
+<li>最后全局池化，softmax分类。初始convd层kernel7*7，stride=2</li>
+</ul>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><p>网络窄，参数少。</p>
+<h2 id="Deep-Residual-Learning-for-Image-Recognition"><a href="#Deep-Residual-Learning-for-Image-Recognition" class="headerlink" title="Deep Residual Learning for Image Recognition"></a>Deep Residual Learning for Image Recognition</h2><p>ResNet是为了解决深度网络degradation问题，（即层数增加，训练误差反而更大）</p>
+<p>优势：在足够深的网络中易优化，同时增加精度。</p>
+<h3 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h3><p>文献表明：深度网络是有用的，堆叠更多层可捕获更丰富的特征。</p>
+<p>但深度网络一个问题在于不容易优化，即出现梯度消失和爆炸问题，</p>
+<p>解决方式是Normalization；</p>
+<p>另一个问题是随着深度网络的增加，准确率却逐渐趋于饱和并开始下降，而这并非是过拟合现象，因为训练误差也随着层数增加而不断增大，</p>
+<p>现有的解决方法是：增加相同的映射，其他层从已学习的浅层model中复制（啥意思？？）；但这种方法可使深层网络不出现更高的训练误差，但是其准确率并没有更好。</p>
+<p>本文提出：深度残差网络，可解决上述问题。采用恒等映射（identiey mapping），对输入（identity）进行的shortcut连接，易优化是因为可直接对前输入进行梯度计算（x+F（x））。本文模型在…获得第一名，有效！</p>
+<h3 id="残差分析"><a href="#残差分析" class="headerlink" title="残差分析"></a>残差分析</h3><ul>
+<li><script type="math/tex; mode=display">
+X_L=X_l+\sum_{i-1}^{L-1}F(x_i,W_i)</script></li>
+<li><p>在误差经过反向传播后，为如下式子，恒等变换使得x可无损传播，残差的梯度在有1的存在也可避免梯度消失。</p>
+</li>
+<li><script type="math/tex; mode=display">
+\frac{\partial_{Loss}}{\partial_{x_l}}=\frac{\partial_{Loss}}{\partial_{x_L}}\cdot(1+\frac{\partial}{\partial_{X_l}}\sum_{i-1}^{L-1}F(x_i,W_i))</script></li>
+</ul>
+<ul>
+<li><p>输出维度形同可采用恒等映射，维度不同可1、0填充，需先下采样，2、w映射到相同维度</p>
+</li>
+<li><p>残差学习对深网更有效，浅层效果不明显</p>
+</li>
+<li><p>skip connection和恒等映射最有用。</p>
+</li>
+<li><p>在前向阶段，输入可直接传到后层；反传阶段，误差可通过恒等映射直接传到浅层</p>
+</li>
+<li><p>预激活（BN和激活放到网络前面）效果会更好，可训练层数更深。</p>
+</li>
+<li><p>模型结构</p>
+<ul>
+<li>32层残差，1层输入卷积，最后一层池化+全连接</li>
+<li>输出大小相同则过滤器个数相同，特征图输出大小减半，则过滤器数加倍，以保持网络复杂度不变。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Highway-Network"><a href="#Highway-Network" class="headerlink" title="Highway Network"></a>Highway Network</h2><h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>通过门控机制来选择输入和输出进行连接。</p>
 <script type="math/tex; mode=display">
-max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script><p>其中$ z_t $表示第t个元素，$z_{&lt;t}$表示打乱序列的第t-1个元素。</p>
-<h3 id="Two-Stream"><a href="#Two-Stream" class="headerlink" title="Two-Stream"></a>Two-Stream</h3><p>attention mask实现方式：Two-Stream</p>
-<p>保留$h_{\theta}(x_{z\leq t})$  和 $g_{\theta}(x_{z&lt;t})$ 两种表示，其中 $h_{\theta}(x_{z\leq t})$ 表示乱序列中前t-1个词和第t个词的隐层信息（和bert隐层一样）， $g_{\theta}(x_{z&lt;t})$  是乱序中前t-1个词和第t个词的位置信息，h和g如下图所示。                                                                                                                              </p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png" alt="XLNET2"></p>
-<p>综合计算如下图所示，其中$g^{0}_i=w$,为随机初始化的向量，$h^0_i=e(x_i)$为第i个词的词向量。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png" alt="1562816758999"><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png" alt="1562816758999"></p>
-<p>保留2种表示可以使得在预测第t个词的时候不看到其文本信息，但可知其位置信息，因为乱序后，如3-2-4-1，要预测4，仅根据3,2来预测但是模型并不知道要预测的位置是4还是1，因此保留g使得模型知道要预测的是哪个位置的词。另外，位置信息也有一定的依赖关系，模型也可以捕捉这个依赖关系。</p>
-<p>具体attention mask做法如下图右所示，query stream不知道当前词（即对角线）的文本信息，只知道其位置信息，content Stream则可基于乱序的前面词和当前词的文本信息。具体解释下图右下矩阵，乱序序列为3-2-4-1，content stream矩阵第一行即是$h_1​$位置，基于2,4,1,3四个词得到h1的信息，第二行即是h2，基于3,2位置得到3的信息，第3行仅根据3得到h3信息，第4行仅根据3,2,4得到h4信息。Query Stream矩阵第一行h1仅根据3,2,4,得到h1信息，并不基于h1内容本身，同理往下。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png" alt="XLNET3"></p>
-<p>Content Stream和普通的attention 一样，Query Stream计算方式则如下，当前位置隐层仅依赖前面位置的文本信息和当前位置的位置信息，并不依赖当前位置的文本信息！</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png" alt="XLNET2"></p>
-<p>在训练阶段保持两个表示，fine-tune阶段不存在语言模型预测，则只用h表示，g表示被舍弃。</p>
-<h2 id="其他亮点"><a href="#其他亮点" class="headerlink" title="其他亮点"></a>其他亮点</h2><ul>
-<li><p>为了便于收敛和优化，模型仅预测部分词信息，将序列分成前半段和后半段，仅预测后半段词</p>
-<script type="math/tex; mode=display">max_{\theta}\ \ \ \  E_z\left[\sum^T_{t-1}\log_{P_{\theta}}(x_{z>c}|x_{z\leq c})\right]=E_z\left[\sum^T_{t=c+1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script></li>
-<li><p>作者采用了transformerXL模型来作为encoder，两个特点：</p>
-<ul>
-<li>片段循环：将序列分成2段，缓存前一个片段的输出，拼接到后一个片段词中，使模型建立长期依赖，且可使用先前段数据来预测当前段，提高了预测速度。</li>
-<li>采用相对位置编码。</li>
-</ul>
-</li>
-</ul>
-<h2 id="和bert相比"><a href="#和bert相比" class="headerlink" title="和bert相比"></a>和bert相比</h2><ul>
-<li>输入和bert同，采用两个句子+SEP和CLS字符来预测，但XLNET_large显示large模型不需要下一句预测任务也可达到相同精度</li>
-<li>和bert一样都是部分词预测，并没有预测全部，</li>
-<li>但比bert多捕捉到了预测词的位置信息，和mask字符间的依赖信息。！</li>
-</ul>
-<h2 id="文章重点小结："><a href="#文章重点小结：" class="headerlink" title="文章重点小结："></a>文章重点小结：</h2><ul>
-<li><p>双向自回归语言编码</p>
-</li>
-<li><p>two stream自注意力</p>
-</li>
-<li>创新点：解决预测token的依赖问题和保留位置信息（其实我个人觉得还好，token依赖因为 mask token随机，且不止训练一遍，总会有别的案例捕捉到这个依赖关系，更何况还有一定比例保持不变。而位置信息可以对bert的mask token也换成其位置信息，而不要文本信息，感觉是一样的，实现还简单些）</li>
-</ul>
+y=H(x,W_H)\cdot T(x,W_T)+x\cdot (1-T(w,W_T))</script><p>T是门控机制动态选择X和H的输出。由下，当门控为0/1只选择其中一个。</p>
+<script type="math/tex; mode=display">
+y=\begin{cases} x & if\  T(x,W_T)=0 \\ H(x,W_H) & if\ T(x,W_T)=1 \end{cases}</script><p>反传时：</p>
+<script type="math/tex; mode=display">
+\frac{\text{d}x}{\text{d}y}=\begin{cases} I & if\  T(x,W_T)=0 \\ H’(x,W_H) & if\ T(x,W_T)=1 \end{cases}</script><p>每个block由state（输出H），和transform gate output组成，y。</p>
 
       
     </div>
@@ -485,8 +473,8 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/30/dynamic_languageMODEL/" rel="next" title="语言模型系列（BERT，ELMO,GTP,XLNET）">
-                <i class="fa fa-chevron-left"></i> 语言模型系列（BERT，ELMO,GTP,XLNET）
+              <a href="/2019/03/11/Multi-Granularity Hierarchical Attention Fusion Networks for Reading Comprehension and Question Answering/" rel="next" title="RC论文整理">
+                <i class="fa fa-chevron-left"></i> RC论文整理
               </a>
             
           </div>
@@ -494,6 +482,10 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/15/entailment_partone/" rel="prev" title="文本蕴含部分论文总结">
+                文本蕴含部分论文总结 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -627,7 +619,7 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XLNet理解"><span class="nav-number">1.</span> <span class="nav-text">XLNet理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两个概念"><span class="nav-number">1.1.</span> <span class="nav-text">两个概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自回归（AR）"><span class="nav-number">1.1.1.</span> <span class="nav-text">自回归（AR）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自编码（AE）"><span class="nav-number">1.1.2.</span> <span class="nav-text">自编码（AE）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation"><span class="nav-number">1.2.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XLNet"><span class="nav-number">1.3.</span> <span class="nav-text">XLNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutaion-language-modeling"><span class="nav-number">1.3.1.</span> <span class="nav-text">Permutaion language modeling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Stream"><span class="nav-number">1.3.2.</span> <span class="nav-text">Two-Stream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他亮点"><span class="nav-number">1.4.</span> <span class="nav-text">其他亮点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#和bert相比"><span class="nav-number">1.5.</span> <span class="nav-text">和bert相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章重点小结："><span class="nav-number">1.6.</span> <span class="nav-text">文章重点小结：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Densely-Connected-Convolutional-Networks"><span class="nav-number">1.</span> <span class="nav-text">Densely Connected Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DenseNet优势："><span class="nav-number">1.1.</span> <span class="nav-text">DenseNet优势：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文章要点"><span class="nav-number">1.2.</span> <span class="nav-text">文章要点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模型结构"><span class="nav-number">1.3.</span> <span class="nav-text">模型结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优点"><span class="nav-number">1.4.</span> <span class="nav-text">优点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-Residual-Learning-for-Image-Recognition"><span class="nav-number">2.</span> <span class="nav-text">Deep Residual Learning for Image Recognition</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Introduction"><span class="nav-number">2.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#残差分析"><span class="nav-number">2.2.</span> <span class="nav-text">残差分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Highway-Network"><span class="nav-number">3.</span> <span class="nav-text">Highway Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思想"><span class="nav-number">3.1.</span> <span class="nav-text">思想</span></a></li></ol></li></ol></div>
             
 
           </div>

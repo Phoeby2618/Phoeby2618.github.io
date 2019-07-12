@@ -79,25 +79,18 @@
 
 
 
-<meta name="description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta name="description" content="BERT仅接一个输出层即可state of art ELMO,GPT缺陷：仅是单向的语言模型，ELMO属于独立的左到右和右到左训练，GTP是采用transfomer的decoder部分，仅是根据前面的token来预测当前词。而单向的对于QA类任务远远不够，so,提出bert双向model 微调优点：需要重新训练的参数较少。 bert结构 双向mask语言模型（仅预测mask词）+下一句预测任务（s">
 <meta name="keywords" content="modelSummary">
 <meta property="og:type" content="article">
-<meta property="og:title" content="XLNet理解">
-<meta property="og:url" content="https://phoeby2618.github.io/2019/07/11/XL_net/index.html">
+<meta property="og:title" content="语言模型系列（BERT，ELMO,GTP,XLNET）">
+<meta property="og:url" content="https://phoeby2618.github.io/2019/06/30/dynamic_languageMODEL/index.html">
 <meta property="og:site_name" content="Doraemon&#39;s Pocket">
-<meta property="og:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
+<meta property="og:description" content="BERT仅接一个输出层即可state of art ELMO,GPT缺陷：仅是单向的语言模型，ELMO属于独立的左到右和右到左训练，GTP是采用transfomer的decoder部分，仅是根据前面的token来预测当前词。而单向的对于QA类任务远远不够，so,提出bert双向model 微调优点：需要重新训练的参数较少。 bert结构 双向mask语言模型（仅预测mask词）+下一句预测任务（s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png">
-<meta property="og:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png">
-<meta property="og:updated_time" content="2019-07-12T08:02:03.635Z">
+<meta property="og:updated_time" content="2019-07-12T08:27:27.759Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="XLNet理解">
-<meta name="twitter:description" content="XLNet理解[TOC] 原文链接: XLNet: Generalized Autoregressive Pretraining for Language Understanding 两个概念自回归（AR）自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率  代表：ELMO，GPT  优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系  缺点：有些任务（如阅读理解）需要">
-<meta name="twitter:image" content="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png">
+<meta name="twitter:title" content="语言模型系列（BERT，ELMO,GTP,XLNET）">
+<meta name="twitter:description" content="BERT仅接一个输出层即可state of art ELMO,GPT缺陷：仅是单向的语言模型，ELMO属于独立的左到右和右到左训练，GTP是采用transfomer的decoder部分，仅是根据前面的token来预测当前词。而单向的对于QA类任务远远不够，so,提出bert双向model 微调优点：需要重新训练的参数较少。 bert结构 双向mask语言模型（仅预测mask词）+下一句预测任务（s">
 
 
 
@@ -127,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+  <link rel="canonical" href="https://phoeby2618.github.io/2019/06/30/dynamic_languageMODEL/">
 
 
 
 
 
-  <title>XLNet理解 | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>语言模型系列（BERT，ELMO,GTP,XLNET） | Doraemon's Pocket</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -292,7 +285,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/07/11/XL_net/">
+    <link itemprop="mainEntityOfPage" href="https://phoeby2618.github.io/2019/06/30/dynamic_languageMODEL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="rui">
@@ -309,7 +302,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">XLNet理解</h1>
+          <h1 class="post-title" itemprop="name headline">语言模型系列（BERT，ELMO,GTP,XLNET）</h1>
         
 
         <div class="post-meta">
@@ -321,8 +314,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-11T09:33:20+08:00">
-                2019-07-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-30T21:47:07+08:00">
+                2019-06-30
               </time>
             
 
@@ -381,79 +374,76 @@
       
 
       
-        <h1 id="XLNet理解"><a href="#XLNet理解" class="headerlink" title="XLNet理解"></a>XLNet理解</h1><p>[TOC]</p>
-<p>原文链接: <a href="https://arxiv.org/pdf/1906.08237.pdf" target="_blank" rel="noopener">XLNet: Generalized Autoregressive Pretraining for Language Understanding</a></p>
-<h2 id="两个概念"><a href="#两个概念" class="headerlink" title="两个概念"></a>两个概念</h2><h3 id="自回归（AR）"><a href="#自回归（AR）" class="headerlink" title="自回归（AR）"></a>自回归（AR）</h3><p>自回归语言模型：预测整个句子的概率分布，基于前面词预测下一个词的概率</p>
+        <h1 id="BERT"><a href="#BERT" class="headerlink" title="BERT"></a>BERT</h1><p>仅接一个输出层即可state of art</p>
+<p>ELMO,GPT缺陷：仅是单向的语言模型，ELMO属于独立的左到右和右到左训练，GTP是采用transfomer的decoder部分，仅是根据前面的token来预测当前词。而单向的对于QA类任务远远不够，so,提出bert双向model</p>
+<p>微调优点：需要重新训练的参数较少。</p>
+<h3 id="bert结构"><a href="#bert结构" class="headerlink" title="bert结构"></a>bert结构</h3><ul>
+<li>双向mask语言模型（仅预测mask词）+下一句预测任务（sentence拼接，sep分隔，开头CLS词预测是/否下一句）</li>
+<li>输入：sequence字符+第1/2个片段+位置embedding</li>
+<li><p>MLM部分：仅预测mask字符，</p>
 <ul>
-<li><p>代表：ELMO，GPT</p>
-</li>
-<li><p>优点：预测整个文本的概率分布，能更好捕捉文本的依存及序列关系</p>
-</li>
-<li><p>缺点：有些任务（如阅读理解）需要上下文来共同理解，只能依据前文信息，不能捕捉上下文关系</p>
-<p>（上述感觉有点矛盾，句子的极大似然有点在于？？）</p>
+<li>缺点：<ul>
+<li>预训练和微调时有影响，微调时看不见mask部分？？？（解决：取15%mask，mask中取80%替换成【mask】token,10%随机替换成另外一个词，10%保持不变。由于随机替换另外一个词仅1.5%，所以不影响。）</li>
+<li>由于每个batch仅预测15%的词，so，收敛慢，但是效果好啊！！！</li>
+</ul>
 </li>
 </ul>
-<h3 id="自编码（AE）"><a href="#自编码（AE）" class="headerlink" title="自编码（AE）"></a>自编码（AE）</h3><p>自编码语言模型：对句子打乱先编码成低维特征，再通过decoder对打乱部分解码。</p>
-<ul>
-<li>代表：BERT</li>
-<li>优点：可捕捉到上下文信息</li>
-<li>缺点：没有估计整个句子的极大似然，而只是将打乱的句子进行重构？？？</li>
+</li>
+<li><p>NSP（下一句预测部分）形式：CLS+S1+[sep]+s2,用CLS字符来预测next/not next</p>
+</li>
 </ul>
-<h2 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h2><p>文章主要和BERT模型比较，因此针对BERT的缺点进行分析：</p>
-<p>BERT问题：</p>
-<ul>
-<li>由于预训练阶段有【mask】字符，而在fine-tune阶段是没有的，导致了预训练和fine-tune阶段的数据差异</li>
-<li>bert是直接对预测字符进行【mask】，但mask字符之间应该还存在依赖关系，但bert直接忽略了。</li>
+<h3 id="训练过程"><a href="#训练过程" class="headerlink" title="训练过程"></a>训练过程</h3><ul>
+<li>使用完整的文档而非片段句子作为语料。</li>
+<li>取2个句子，后一个句子50%替换成非下一句</li>
+<li>seqence：512个token</li>
+<li>_gelu激活_，drop0.1,ADam</li>
+<li>loss:MLM+NSP任务最大似然取平均。</li>
 </ul>
-<p>综上描述，本文提出XLNet模型，结合了自回归和自编码语言模型各自的优点，并改进了bert的问题。</p>
-<ol>
-<li>XLNet采用自回归方式进行训练，同时结合上下文信息。</li>
-<li>上下文信息的获取并不是像bert直接【mask】预测字符，而是通过“打乱”句子词的顺序来获得，并在attention层采用特定mask方式来预测乱序序列的极大似然。</li>
-</ol>
-<p>另创新:</p>
-<ol>
-<li>采用transfomerXL来作编码器，集成了片段循环和相对位置编码，相对位置编码对长文本更有用</li>
-<li>基于本文的乱序语言模型调整了TransformerXL参数</li>
-</ol>
-<h2 id="XLNet"><a href="#XLNet" class="headerlink" title="XLNet"></a>XLNet</h2><h3 id="Permutaion-language-modeling"><a href="#Permutaion-language-modeling" class="headerlink" title="Permutaion language modeling"></a>Permutaion language modeling</h3><p>对于一个长度为N的序列，其全排列共有n！种方式。XLNet并不是只基于原始输入序列来预测该序列的极大似然，而是采样原始序列的不同排列方式来预测，由于不同排列方式包含了一个词的上下文信息，因此XLNet模型可捕捉到文本的上下文信息。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNet1.png" alt="1562816758999"></p>
-<p>如上图：对于原始序列1,2,3,4. 采样了4种排列方式，当预测的字符是3时，对于4,3,1,2序列，3可基于其下文4来预测，而对于1,4,2,3,序列，3可得到所有上下文信息。由于模型的参数是不变的，因此，选择不同排列方式进行训练，h3位置的隐层信息会结合所有的序列上下文信息。</p>
-<p>需要注意的是：这里乱序并不是真正的输入序列乱序，预训练时输入序列仍然是1,2,3,4序列，其“打乱”是通过attention层 mask方式来获得打乱序列。为什么不直接对输入序列进行打乱，作者说是为了保持预训练和fine-tune阶段统一，fine-tune阶段并不会将序列乱序输入。</p>
-<p>XLNET语言模型目标：</p>
+<h3 id="文中描述bert和gtp训练区别"><a href="#文中描述bert和gtp训练区别" class="headerlink" title="文中描述bert和gtp训练区别"></a>文中描述bert和gtp训练区别</h3><ul>
+<li>语料：除了采用800MBooksCorpus，还用了WIKIoedia2500M word训练</li>
+<li>使用CLS和SEP字符，GPT仅在微调阶段运用了，BERT在预训练阶段也用</li>
+<li>对于1M步，GPT一个batch有32000个词，BERT有128000个词</li>
+<li>GPT在所有的微调都使用学习率为5e-5，BERT是验证集找最好的学习率。</li>
+</ul>
+<h2 id="ELMO"><a href="#ELMO" class="headerlink" title="ELMO"></a>ELMO</h2><h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3><p>一词多义问题，动态词向量</p>
+<h3 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h3><ul>
+<li>深度双向lstm语言模型</li>
+<li>融合预训练各层词的状态（高层：语义相关，低层：语法相关）</li>
+</ul>
+<p>语言模型目标函数：以整个句子为单位预测句子概率</p>
+<p>每层词向量归一化相加*权重</p>
 <script type="math/tex; mode=display">
-max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script><p>其中$ z_t $表示第t个元素，$z_{&lt;t}$表示打乱序列的第t-1个元素。</p>
-<h3 id="Two-Stream"><a href="#Two-Stream" class="headerlink" title="Two-Stream"></a>Two-Stream</h3><p>attention mask实现方式：Two-Stream</p>
-<p>保留$h_{\theta}(x_{z\leq t})$  和 $g_{\theta}(x_{z&lt;t})$ 两种表示，其中 $h_{\theta}(x_{z\leq t})$ 表示乱序列中前t-1个词和第t个词的隐层信息（和bert隐层一样）， $g_{\theta}(x_{z&lt;t})$  是乱序中前t-1个词和第t个词的位置信息，h和g如下图所示。                                                                                                                              </p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET3.png" alt="XLNET2"></p>
-<p>综合计算如下图所示，其中$g^{0}_i=w$,为随机初始化的向量，$h^0_i=e(x_i)$为第i个词的词向量。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET5.png" alt="1562816758999"><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET6.png" alt="1562816758999"></p>
-<p>保留2种表示可以使得在预测第t个词的时候不看到其文本信息，但可知其位置信息，因为乱序后，如3-2-4-1，要预测4，仅根据3,2来预测但是模型并不知道要预测的位置是4还是1，因此保留g使得模型知道要预测的是哪个位置的词。另外，位置信息也有一定的依赖关系，模型也可以捕捉这个依赖关系。</p>
-<p>具体attention mask做法如下图右所示，query stream不知道当前词（即对角线）的文本信息，只知道其位置信息，content Stream则可基于乱序的前面词和当前词的文本信息。具体解释下图右下矩阵，乱序序列为3-2-4-1，content stream矩阵第一行即是$h_1​$位置，基于2,4,1,3四个词得到h1的信息，第二行即是h2，基于3,2位置得到3的信息，第3行仅根据3得到h3信息，第4行仅根据3,2,4得到h4信息。Query Stream矩阵第一行h1仅根据3,2,4,得到h1信息，并不基于h1内容本身，同理往下。</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/XLNET2.png" alt="XLNET3"></p>
-<p>Content Stream和普通的attention 一样，Query Stream计算方式则如下，当前位置隐层仅依赖前面位置的文本信息和当前位置的位置信息，并不依赖当前位置的文本信息！</p>
-<p><img src="https://githubpic-1259632191.cos.ap-chengdu.myqcloud.com/hexo/xlnet7.png" alt="XLNET2"></p>
-<p>在训练阶段保持两个表示，fine-tune阶段不存在语言模型预测，则只用h表示，g表示被舍弃。</p>
-<h2 id="其他亮点"><a href="#其他亮点" class="headerlink" title="其他亮点"></a>其他亮点</h2><ul>
-<li><p>为了便于收敛和优化，模型仅预测部分词信息，将序列分成前半段和后半段，仅预测后半段词</p>
-<script type="math/tex; mode=display">max_{\theta}\ \ \ \  E_z\left[\sum^T_{t-1}\log_{P_{\theta}}(x_{z>c}|x_{z\leq c})\right]=E_z\left[\sum^T_{t=c+1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</script></li>
-<li><p>作者采用了transformerXL模型来作为encoder，两个特点：</p>
+ELMO_K=r\sum_{j=0}^Ls_jh_m^{k,j}</script><p>r为缩放因子，实验证明很有用。</p>
+<p>输入：字符级别cnn卷积    </p>
+<p>第一层到有第二层用到剩余连接</p>
+<p>隐层4096，映射512维，字符嵌入=2048（n_gram卷积+highway）</p>
+<h2 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h2><p>为什么用语言模型——具体任务标注数据有限。</p>
+<p>词表示学习2个挑战</p>
 <ul>
-<li>片段循环：将序列分成2段，缓存前一个片段的输出，拼接到后一个片段词中，使模型建立长期依赖，且可使用先前段数据来预测当前段，提高了预测速度。</li>
-<li>采用相对位置编码。</li>
+<li>不明确什么优化目标适合迁移</li>
+<li>无统一且有效的方法去迁移</li>
 </ul>
-</li>
+<p>So，提出模型：</p>
+<ul>
+<li>transfomer 变种decoder部分（仅mask attention+前馈），因为lstm捕捉到的距离有限</li>
+<li>语言模型目标：窗口词最大似然</li>
+<li>fine_tune目标：具体任务目标+入*语言模型目标（作为辅助目标：加速收敛，提高性能）</li>
 </ul>
-<h2 id="和bert相比"><a href="#和bert相比" class="headerlink" title="和bert相比"></a>和bert相比</h2><ul>
-<li>输入和bert同，采用两个句子+SEP和CLS字符来预测，但XLNET_large显示large模型不需要下一句预测任务也可达到相同精度</li>
-<li>和bert一样都是部分词预测，并没有预测全部，</li>
-<li>但比bert多捕捉到了预测词的位置信息，和mask字符间的依赖信息。！</li>
+<h2 id="XLNET"><a href="#XLNET" class="headerlink" title="XLNET"></a>XLNET</h2><h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>序列的最大似然估计（自回归语言模型目标函数）+双向文本信息</p>
+<h3 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h3><ul>
+<li>乱序来捕捉上下文信息</li>
+<li>乱序通过two-stream实现。</li>
+<li>two-stream采用两种输入和隐层方式：一种是g（仅有序列前面词的文本信息和当前词的位置信息），一种是h（和bert方式一样）</li>
+<li>采用两种方式保留了预测字符之间的依赖关系。</li>
 </ul>
-<h2 id="文章重点小结："><a href="#文章重点小结：" class="headerlink" title="文章重点小结："></a>文章重点小结：</h2><ul>
-<li><p>双向自回归语言编码</p>
-</li>
-<li><p>two stream自注意力</p>
-</li>
-<li>创新点：解决预测token的依赖问题和保留位置信息（其实我个人觉得还好，token依赖因为 mask token随机，且不止训练一遍，总会有别的案例捕捉到这个依赖关系，更何况还有一定比例保持不变。而位置信息可以对bert的mask token也换成其位置信息，而不要文本信息，感觉是一样的，实现还简单些）</li>
+<h3 id="相对于bert改进"><a href="#相对于bert改进" class="headerlink" title="相对于bert改进"></a>相对于bert改进</h3><ul>
+<li>用于transformerXL，可捕捉更长距离依赖关系</li>
+<li>采用attention mask解决了bert预训练和fine-tune阶段输入不一致问题,以及mask token间的依赖问题</li>
+<li>用Two-stream解决了[mask] token的位置依赖信息。</li>
+</ul>
+<h3 id="再次总结"><a href="#再次总结" class="headerlink" title="再次总结"></a>再次总结</h3><ul>
+<li>为了避免bert预训练和fine-tune不一致问题，XLNet并不采用输入mask方式，而是在attention做mask，还说bert解决fine-tune看不到mask的方式是随机替换别的词或保持不变，但这个几率太小了。</li>
+<li>也为了解决基于自回归方法预测，模型采用two-tream方式来做</li>
 </ul>
 
       
@@ -485,8 +475,8 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/30/dynamic_languageMODEL/" rel="next" title="语言模型系列（BERT，ELMO,GTP,XLNET）">
-                <i class="fa fa-chevron-left"></i> 语言模型系列（BERT，ELMO,GTP,XLNET）
+              <a href="/2019/06/15/entailment_partone/" rel="next" title="文本蕴含部分论文总结">
+                <i class="fa fa-chevron-left"></i> 文本蕴含部分论文总结
               </a>
             
           </div>
@@ -494,6 +484,10 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/11/XL_net/" rel="prev" title="XLNet理解">
+                XLNet理解 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -627,7 +621,7 @@ max_{\theta} E_z \left[ \sum^T_{t-1}\log_{P_{\theta}}(x_{z_t}|x_{z<t})\right]</s
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#XLNet理解"><span class="nav-number">1.</span> <span class="nav-text">XLNet理解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#两个概念"><span class="nav-number">1.1.</span> <span class="nav-text">两个概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#自回归（AR）"><span class="nav-number">1.1.1.</span> <span class="nav-text">自回归（AR）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自编码（AE）"><span class="nav-number">1.1.2.</span> <span class="nav-text">自编码（AE）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Motivation"><span class="nav-number">1.2.</span> <span class="nav-text">Motivation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XLNet"><span class="nav-number">1.3.</span> <span class="nav-text">XLNet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutaion-language-modeling"><span class="nav-number">1.3.1.</span> <span class="nav-text">Permutaion language modeling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Stream"><span class="nav-number">1.3.2.</span> <span class="nav-text">Two-Stream</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他亮点"><span class="nav-number">1.4.</span> <span class="nav-text">其他亮点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#和bert相比"><span class="nav-number">1.5.</span> <span class="nav-text">和bert相比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章重点小结："><span class="nav-number">1.6.</span> <span class="nav-text">文章重点小结：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#BERT"><span class="nav-number">1.</span> <span class="nav-text">BERT</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#bert结构"><span class="nav-number">1.0.1.</span> <span class="nav-text">bert结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#训练过程"><span class="nav-number">1.0.2.</span> <span class="nav-text">训练过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#文中描述bert和gtp训练区别"><span class="nav-number">1.0.3.</span> <span class="nav-text">文中描述bert和gtp训练区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ELMO"><span class="nav-number">1.1.</span> <span class="nav-text">ELMO</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决问题"><span class="nav-number">1.1.1.</span> <span class="nav-text">解决问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#要点"><span class="nav-number">1.1.2.</span> <span class="nav-text">要点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GPT"><span class="nav-number">1.2.</span> <span class="nav-text">GPT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XLNET"><span class="nav-number">1.3.</span> <span class="nav-text">XLNET</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#特点"><span class="nav-number">1.3.1.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#做法"><span class="nav-number">1.3.2.</span> <span class="nav-text">做法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相对于bert改进"><span class="nav-number">1.3.3.</span> <span class="nav-text">相对于bert改进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#再次总结"><span class="nav-number">1.3.4.</span> <span class="nav-text">再次总结</span></a></li></ol></li></ol></div>
             
 
           </div>
